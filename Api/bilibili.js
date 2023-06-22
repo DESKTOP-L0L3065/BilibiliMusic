@@ -1,4 +1,4 @@
-export default function bilibili (packages) {
+export default function bilibili(packages) {
     const { axios, dayjs } = packages;
     const headers = {
         "user-agent":
@@ -10,14 +10,14 @@ export default function bilibili (packages) {
     let cookie;
 
     /** 获取cid */
-    async function getCid (bvid, aid) {
+    async function getCid(bvid, aid) {
         const params = bvid
             ? {
-                bvid: bvid,
-            }
+                  bvid: bvid,
+              }
             : {
-                aid: aid,
-            };
+                  aid: aid,
+              };
         const cidRes = (
             await axios.get(
                 "https://api.bilibili.com/x/web-interface/view?%s",
@@ -31,7 +31,7 @@ export default function bilibili (packages) {
     }
 
     /** 格式化 */
-    function durationToSec (duration) {
+    function durationToSec(duration) {
         if (typeof duration === "number") {
             return duration;
         }
@@ -58,7 +58,7 @@ export default function bilibili (packages) {
         referer: "https://search.bilibili.com/",
         "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
     };
-    async function getCookie () {
+    async function getCookie() {
         if (!cookie) {
             cookie = await axios.get(
                 "https://api.bilibili.com/x/frontend/finger/spi",
@@ -67,7 +67,7 @@ export default function bilibili (packages) {
         }
     }
     const pageSize = 30;
-    async function searchBase (keyword, page, searchType) {
+    async function searchBase(keyword, page, searchType) {
         await getCookie();
         const params = {
             context: "",
@@ -102,7 +102,7 @@ export default function bilibili (packages) {
         return res.data;
     }
 
-    async function searchAlbum (keyword, page) {
+    async function searchAlbum(keyword, page) {
         const resultData = await searchBase(keyword, page, "video");
         const albums = resultData.result.map(function (result) {
             return {
@@ -137,7 +137,7 @@ export default function bilibili (packages) {
         };
     }
 
-    async function searchArtist (keyword, page) {
+    async function searchArtist(keyword, page) {
         const resultData = await searchBase(keyword, page, "bili_user");
         const artists = resultData.result.map((result) => ({
             name: result.uname,
@@ -153,7 +153,7 @@ export default function bilibili (packages) {
         };
     }
 
-    async function getArtistWorks (artistItem, page, type) {
+    async function getArtistWorks(artistItem, page, type) {
         if (type !== "album") {
             return;
         }
@@ -235,7 +235,7 @@ export default function bilibili (packages) {
         cacheControl: "no-cache",
         srcUrl: "https://gitee.com/maotoumao/MusicFreePlugins/raw/master/bilibili.js",
         primaryKey: ["id", "aid", "bvid", "cid"],
-        async search (keyword, page, type) {
+        async search(keyword, page, type) {
             if (type === "album") {
                 return await searchAlbum(keyword, page);
             }
@@ -245,7 +245,7 @@ export default function bilibili (packages) {
         },
 
         /** 获取真实的播放源 */
-        async getMediaSource (musicItem) {
+        async getMediaSource(musicItem) {
             let cid = musicItem.cid;
 
             if (!cid) {
@@ -254,11 +254,11 @@ export default function bilibili (packages) {
 
             const _params = musicItem.bvid
                 ? {
-                    bvid: musicItem.bvid,
-                }
+                      bvid: musicItem.bvid,
+                  }
                 : {
-                    aid: musicItem.aid,
-                };
+                      aid: musicItem.aid,
+                  };
 
             const res = (
                 await axios.get("https://api.bilibili.com/x/player/playurl", {
@@ -294,7 +294,7 @@ export default function bilibili (packages) {
             };
         },
         /** 获取专辑详细信息 */
-        async getAlbumInfo (albumItem) {
+        async getAlbumInfo(albumItem) {
             const cidRes = await getCid(albumItem.bvid, albumItem.aid);
 
             const _ref2 =

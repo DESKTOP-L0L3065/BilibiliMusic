@@ -5,4 +5,4 @@ const sotre = configureStore({
         ScreenSlice,
     },
 });
-export default sotre
+export default sotre;

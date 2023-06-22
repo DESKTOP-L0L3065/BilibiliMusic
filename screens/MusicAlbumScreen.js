@@ -4,7 +4,7 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
 } from "react-native";
 import bilibili from "../Api/bilibili";
 import axios from "axios";
@@ -33,21 +33,33 @@ const MusicAlbumScreen = ({ route }) => {
                 }}
                 style={styles.image}
             ></Image>
-            {albumInfo != null ? albumInfo.length > 1 ? albumInfo.map((item, index) => {
-                return (
-                    <TouchableWithoutFeedback key={index} onPress={() => {
-                        let a = infoGetter.getMediaSource({ aid: item.aid, bvid: item.bvid }).then((value) => {
-                            console.log(value);
-                        })
-                    }}>
-                        <View>
-                            <Text>{item.title}aaaa</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                );
-            }) : (<Text onPress={() => {
-
-            }}>{route.params.title}</Text>) : (
+            {albumInfo != null ? (
+                albumInfo.length > 1 ? (
+                    albumInfo.map((item, index) => {
+                        return (
+                            <TouchableWithoutFeedback
+                                key={index}
+                                onPress={() => {
+                                    let a = infoGetter
+                                        .getMediaSource({
+                                            aid: item.aid,
+                                            bvid: item.bvid,
+                                        })
+                                        .then((value) => {
+                                            console.log(value);
+                                        });
+                                }}
+                            >
+                                <View>
+                                    <Text>{item.title}aaaa</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        );
+                    })
+                ) : (
+                    <Text onPress={() => {}}>{route.params.title}</Text>
+                )
+            ) : (
                 <Text>...</Text>
             )}
         </ScrollView>
