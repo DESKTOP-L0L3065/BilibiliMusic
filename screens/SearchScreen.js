@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { ScrollView, TextInput, StyleSheet } from "react-native";
+import { ScrollView, TextInput, StyleSheet, Keyboard } from "react-native";
+import { useDispatch } from "react-redux";
+import { setShowPlaybar } from "../store/Slices/PlaybarSlice";
 
-const SearchScreen = ({ navigation }) => {
-    // useEffect(() => {
-    //     const [searchValue, setSearchValue] = useState();
-    // });
+const SearchScreen = ({ navigation, route }) => {
     const [searchValue, setSearchValue] = useState();
+    const dispatch = useDispatch();
+    Keyboard.addListener("keyboardDidShow", () => {
+        dispatch(setShowPlaybar(false));
+    });
+    Keyboard.addListener("keyboardDidHide", () => {
+        dispatch(setShowPlaybar(true));
+    });
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <TextInput

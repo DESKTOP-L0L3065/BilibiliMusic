@@ -51,7 +51,7 @@ const MusicAlbumScreen = ({ route }) => {
                                 }}
                             >
                                 <View>
-                                    <Text>{item.title}aaaa</Text>
+                                    <Text>{item.title}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         );
