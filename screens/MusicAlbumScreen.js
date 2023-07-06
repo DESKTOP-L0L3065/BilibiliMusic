@@ -10,7 +10,8 @@ import bilibili from "../Api/bilibili";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-const MusicAlbumScreen = ({ route }) => {
+
+const MusicAlbumScreen = ({ route, navigation }) => {
     const [albumInfo, setAlbumInfo] = useState(null);
     const infoGetter = bilibili({ axios, dayjs });
     useEffect(() => {
@@ -40,13 +41,17 @@ const MusicAlbumScreen = ({ route }) => {
                             <TouchableWithoutFeedback
                                 key={index}
                                 onPress={() => {
-                                    let a = infoGetter
+                                    console.log(item.aid, item.title);
+                                    infoGetter
                                         .getMediaSource({
                                             aid: item.aid,
                                             bvid: item.bvid,
+                                            cid: item.cid,
                                         })
                                         .then((value) => {
-                                            console.log(value);
+                                            navigation.navigate("TestScreen", {
+                                                url: value.url,
+                                            });
                                         });
                                 }}
                             >

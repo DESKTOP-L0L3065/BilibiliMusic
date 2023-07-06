@@ -1,17 +1,17 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import SearchScreen from "./screens/SearchScreen";
 import MusicListScreen from "./screens/MusicListScreen";
 import MusicAlbumScreen from "./screens/MusicAlbumScreen";
+import Test from "./screens/Test";
 
 import Playbar from "./components/Home/Playbar";
 
 import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "./store/store";
-import { StatusBar } from "react-native";
+import { StatusBar, Button } from "react-native";
 
 import { Text, View, ScrollView } from "react-native";
 
@@ -50,6 +50,10 @@ export default function App() {
                         <Stack.Screen
                             name="MusicAlbumScreen"
                             component={MusicAlbumScreen}
+                        ></Stack.Screen>
+                        <Stack.Screen
+                            name="TestScreen"
+                            component={Test}
                         ></Stack.Screen>
                     </Stack.Navigator>
                 </Provider>

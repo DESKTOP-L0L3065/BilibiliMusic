@@ -1,5 +1,5 @@
 import { View, Text, FlatList, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import bilibili from "../Api/bilibili";
@@ -8,6 +8,7 @@ import MusicList from "../components/MusicListScreen/MusicList";
 const MusicListScreen = ({ route, navigation }) => {
     const [musicList, setMusicList] = useState(null);
     useEffect(() => {
+        console.log("bb");
         const api = bilibili({ axios, dayjs });
         const getMusicList = async () => {
             await api

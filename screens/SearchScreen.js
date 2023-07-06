@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { ScrollView, TextInput, StyleSheet, Keyboard } from "react-native";
+import {
+    ScrollView,
+    TextInput,
+    StyleSheet,
+    Keyboard,
+    Button,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { setShowPlaybar } from "../store/Slices/PlaybarSlice";
 
@@ -40,7 +46,6 @@ const styles = StyleSheet.create({
         width: 300,
         borderRadius: 20,
         height: 35,
-        alignContent: "center",
         backgroundColor: "#f5f5f5",
         marginTop: 10,
         paddingLeft: 20,
