@@ -3,61 +3,63 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import SearchScreen from "./screens/SearchScreen";
-import MusicListScreen from "./screens/MusicListScreen";
-import MusicAlbumScreen from "./screens/MusicAlbumScreen";
+import MusicAlbumListScreen from "./screens/MusicAlbumListScreen";
+import MusicAlbumInfoScreen from "./screens/MusicAlbumInfoScreen";
 import Test from "./screens/Test";
 
 import Playbar from "./components/Home/Playbar";
 
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store/store";
-import { StatusBar, Button } from "react-native";
-
-import { Text, View, ScrollView } from "react-native";
+import { StatusBar, Dimensions, View } from "react-native";
 
 const Stack = createNativeStackNavigator();
-
 export default function App() {
+    let height = Dimensions.get("screen").height;
     return (
-        <View style={{ flex: 1 }}>
-            <NavigationContainer
-                theme={{
-                    colors: {
-                        background: "white",
-                    },
-                }}
-            >
-                <Provider store={store}>
-                    <Playbar></Playbar>
-                    <Stack.Navigator
-                        screenOptions={{
-                            headerShown: false,
-                            statusBarTranslucent: true,
-                            statusBarStyle: "dark",
-                            contentStyle: {
-                                marginTop: StatusBar.currentHeight,
-                            },
+        <View style={{ height }}>
+            <Provider store={store}>
+                <Playbar></Playbar>
+                <NavigationContainer
+                    theme={{
+                        colors: {
+                            background: "white",
+                        },
+                    }}
+                >
+                    <View
+                        style={{
+                            height: height - 75 - StatusBar.currentHeight,
+                            marginTop: StatusBar.currentHeight,
                         }}
                     >
-                        <Stack.Screen
-                            name="SearchScreen"
-                            component={SearchScreen}
-                        ></Stack.Screen>
-                        <Stack.Screen
-                            name="MusicListScreen"
-                            component={MusicListScreen}
-                        ></Stack.Screen>
-                        <Stack.Screen
-                            name="MusicAlbumScreen"
-                            component={MusicAlbumScreen}
-                        ></Stack.Screen>
-                        <Stack.Screen
-                            name="TestScreen"
-                            component={Test}
-                        ></Stack.Screen>
-                    </Stack.Navigator>
-                </Provider>
-            </NavigationContainer>
+                        <Stack.Navigator
+                            screenOptions={{
+                                headerShown: false,
+                                statusBarTranslucent: true,
+                                statusBarStyle: "dark",
+                            }}
+                        >
+                            <Stack.Screen
+                                name="SearchScreen"
+                                component={SearchScreen}
+                            ></Stack.Screen>
+                            <Stack.Screen
+                                name="MusicAlbumListScreen"
+                                component={MusicAlbumListScreen}
+                            ></Stack.Screen>
+                            <Stack.Screen
+                                name="MusicAlbumInfoScreen"
+                                component={MusicAlbumInfoScreen}
+                            ></Stack.Screen>
+                            <Stack.Screen
+                                name="TestScreen"
+                                component={Test}
+                            ></Stack.Screen>
+                        </Stack.Navigator>
+                    </View>
+                </NavigationContainer>
+            </Provider>
         </View>
     );
 }

@@ -1,22 +1,21 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { View, FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import bilibili from "../Api/bilibili";
-import MusicList from "../components/MusicListScreen/MusicList";
+import AlbumList from "../components/MusicAlbumListScreen/AlbumList";
 
-const MusicListScreen = ({ route, navigation }) => {
+const MusicAlbumListScreen = ({ route, navigation }) => {
     const [musicList, setMusicList] = useState(null);
     useEffect(() => {
-        console.log("bb");
         const api = bilibili({ axios, dayjs });
         const getMusicList = async () => {
-            await api
-                .search(route.params.searchValue, 1, "album")
-                .then((value) => value)
-                .then((value) => {
-                    setMusicList(value.data);
-                });
+            const value = await api.search(
+                route.params.searchValue,
+                1,
+                "album"
+            );
+            setMusicList(value.data);
         };
         getMusicList();
     }, []);
@@ -26,10 +25,10 @@ const MusicListScreen = ({ route, navigation }) => {
                 data={musicList}
                 renderItem={(item) => {
                     return (
-                        <MusicList
+                        <AlbumList
                             info={item}
                             navigation={navigation}
-                        ></MusicList>
+                        ></AlbumList>
                     );
                 }}
                 keyExtractor={(item) => item.id}
@@ -39,7 +38,7 @@ const MusicListScreen = ({ route, navigation }) => {
 };
 const styles = StyleSheet.create({
     container: {
-        marginTop: 30,
+        paddingTop: 30,
     },
 });
-export default MusicListScreen;
+export default MusicAlbumListScreen;
