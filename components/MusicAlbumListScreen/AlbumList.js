@@ -1,8 +1,13 @@
 import { StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
 import React from "react";
 import { Feather } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { addAlbum } from "../../store/Slices/AlbumListSlice";
 
 const AlbumList = (props) => {
+    // const albumList = useSelector((state) => state.AlbumListSlice.album);
+    const dispatch = useDispatch();
+    // console.log(props.info);
     return (
         <TouchableNativeFeedback
             onPress={() => {
@@ -22,7 +27,7 @@ const AlbumList = (props) => {
             <View style={styles.list}>
                 <View style={styles.infoBox}>
                     <Text numberOfLines={1} style={styles.title}>
-                        {props.info.item.title.replace(/\【(.*?)\】/g, "")}
+                        {props.info.item.title.replace(/【|】/g, "")}
                     </Text>
                     <Text style={styles.artist}>{props.info.item.artist}</Text>
                 </View>
@@ -32,7 +37,17 @@ const AlbumList = (props) => {
                     size={22}
                     color="black"
                     onPress={() => {
-                        // console.log("Aa");
+                        dispatch(
+                            addAlbum({
+                                name: props.info.item.title.replace(
+                                    /【|】/g,
+                                    ""
+                                ),
+                                aid: props.info.item.aid,
+                                bvid: props.info.item.bvid,
+                                artwork: props.info.item.artwork,
+                            })
+                        );
                     }}
                 />
             </View>

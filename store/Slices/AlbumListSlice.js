@@ -13,6 +13,12 @@ const AlbumListSlice = createSlice({
         addAlbum: (state, action) => {
             state.album.push(action.payload);
             console.log(state.album);
+            (async () => {
+                await AsyncStorage.setItem(
+                    "albumList",
+                    JSON.stringify(state.album)
+                );
+            })();
         },
         removeAlbum: (state, action) => {
             state.album.splice(action.payload, 1);
@@ -22,7 +28,7 @@ const AlbumListSlice = createSlice({
                     JSON.stringify(state.album)
                 );
             })();
-            console.log(state.album);
+            // console.log(state.album);
         },
     },
 });

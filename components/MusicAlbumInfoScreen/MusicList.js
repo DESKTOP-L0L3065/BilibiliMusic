@@ -11,7 +11,6 @@ import {
 import infoGetter from "../../Api/test2";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MusicList = (props) => {
     const albumInfo = props.albumInfo;
@@ -72,17 +71,14 @@ const styles = StyleSheet.create({
     list: {
         height: 60,
         paddingLeft: 30,
-        // borderWidth: 1,
         flexDirection: "row",
     },
     title: {
-        // borderWidth: 1,
         width: "60%",
         justifyContent: "center",
     },
     btnBox: {
         flex: 1,
-        // borderWidth: 1,
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
