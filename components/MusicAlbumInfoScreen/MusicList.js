@@ -16,7 +16,7 @@ const MusicList = (props) => {
     const albumInfo = props.albumInfo;
     const dispatch = useDispatch();
     return (
-        <View style={{ width: "100%", marginTop: 30 }}>
+        <View style={{ width: "100%", marginTop: 50 }}>
             {albumInfo.map((item, index) => {
                 return (
                     <TouchableWithoutFeedback
@@ -45,15 +45,15 @@ const MusicList = (props) => {
                                 <Text numberOfLines={1}>{item.title}</Text>
                             </View>
                             <View style={styles.btnBox}>
-                                <Feather name="heart" size={22} color="black" />
-                                <AntDesign
+                                <Feather name="heart" size={20} color="black" />
+                                {/* <AntDesign
                                     name="heart"
-                                    size={22}
-                                    color="pink"
-                                />
+                                    size={20}
+                                    color="#ff6666"
+                                /> */}
                                 <Feather
                                     name="plus-square"
-                                    size={22}
+                                    size={20}
                                     color="black"
                                 />
                             </View>
@@ -69,7 +69,7 @@ export default MusicList;
 
 const styles = StyleSheet.create({
     list: {
-        height: 60,
+        height: 45,
         paddingLeft: 30,
         flexDirection: "row",
     },

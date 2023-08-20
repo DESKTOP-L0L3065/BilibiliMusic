@@ -10,7 +10,6 @@ import {
     Modal,
     TouchableHighlight,
     KeyboardAvoidingView,
-    TouchableNativeFeedback,
     TouchableWithoutFeedback,
     Image,
 } from "react-native";
@@ -31,6 +30,7 @@ const SearchScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const albumList = useSelector((state) => state.AlbumListSlice.album);
     const [modal, setModal] = useState(false);
+    const [album, setAlbum] = useState();
 
     Keyboard.addListener("keyboardDidShow", () => {
         dispatch(setShowPlaybar(false));
@@ -51,9 +51,13 @@ const SearchScreen = ({ navigation }) => {
             } else {
                 await AsyncStorage.setItem(
                     "albumList",
-                    JSON.stringify([{ name: "收藏", album: [] }])
+                    JSON.stringify([
+                        { title: "收藏", album: [], artificial: true },
+                    ])
                 );
-                dispatch(setState([{ name: "收藏", album: [] }]));
+                dispatch(
+                    setState([{ title: "收藏", album: [], artificial: true }])
+                );
             }
         })();
     }, []);
@@ -75,26 +79,32 @@ const SearchScreen = ({ navigation }) => {
                     }}
                 ></TextInput>
                 <View style={styles.btnBox}>
-                    <View style={styles.btn}>
-                        <AntDesign name="heart" size={24} color="#ff6666" />
-                        <Text>收藏</Text>
-                    </View>
-                    <View style={styles.btn}>
-                        <Feather
-                            name="download-cloud"
-                            size={24}
-                            color="black"
-                        />
-                        <Text>下载</Text>
-                    </View>
-                    <View style={styles.btn}>
-                        <AntDesign
-                            name="clockcircleo"
-                            size={24}
-                            color="black"
-                        />
-                        <Text>历史</Text>
-                    </View>
+                    <TouchableWithoutFeedback>
+                        <View style={styles.btn}>
+                            <AntDesign name="heart" size={24} color="#ff6666" />
+                            <Text>收藏</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback>
+                        <View style={styles.btn}>
+                            <Feather
+                                name="download-cloud"
+                                size={24}
+                                color="black"
+                            />
+                            <Text>下载</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback>
+                        <View style={styles.btn}>
+                            <AntDesign
+                                name="clockcircleo"
+                                size={24}
+                                color="black"
+                            />
+                            <Text>历史</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={() => setModal(true)}>
                         <View style={styles.btn}>
                             <AntDesign
@@ -115,7 +125,20 @@ const SearchScreen = ({ navigation }) => {
                                       key={index}
                                       activeOpacity={1}
                                       underlayColor="#bababa"
-                                      onPress={() => {}}
+                                      onPress={() => {
+                                          if (item.artificial) {
+                                              console.log("a");
+                                          } else {
+                                              navigation.navigate(
+                                                  "MusicAlbumInfoScreen",
+                                                  {
+                                                      aid: item.aid,
+                                                      bvid: item.bvid,
+                                                      artwork: item.artwork,
+                                                  }
+                                              );
+                                          }
+                                      }}
                                   >
                                       <View style={styles.albumItem}>
                                           {item.artwork ? (
@@ -139,20 +162,24 @@ const SearchScreen = ({ navigation }) => {
                                                   marginRight: 40,
                                               }}
                                           >
-                                              {item.name}
+                                              {item.title}
                                           </Text>
                                           {index == 0 ? null : (
-                                              <AntDesign
-                                                  name="delete"
-                                                  size={24}
-                                                  color="black"
-                                                  style={styles.delete}
+                                              <TouchableWithoutFeedback
                                                   onPress={() => {
                                                       dispatch(
                                                           removeAlbum(index)
                                                       );
                                                   }}
-                                              />
+                                              >
+                                                  <View style={styles.delete}>
+                                                      <AntDesign
+                                                          name="delete"
+                                                          size={24}
+                                                          color="black"
+                                                      />
+                                                  </View>
+                                              </TouchableWithoutFeedback>
                                           )}
                                       </View>
                                   </TouchableHighlight>
@@ -173,6 +200,11 @@ const SearchScreen = ({ navigation }) => {
                                 <View>
                                     <TextInput
                                         style={styles.albumName}
+                                        value={album}
+                                        onChangeText={(value) => {
+                                            setAlbum(value);
+                                            console.log(album);
+                                        }}
                                     ></TextInput>
                                 </View>
                                 <View style={styles.btnContainer}>
@@ -190,7 +222,23 @@ const SearchScreen = ({ navigation }) => {
                                         activeOpacity={0.6}
                                         style={styles.enter}
                                         onPress={() => {
-                                            setModal(false);
+                                            if (
+                                                album == null ||
+                                                album == undefined ||
+                                                album == ""
+                                            ) {
+                                                console.log("kong");
+                                            } else {
+                                                setModal(false);
+                                                dispatch(
+                                                    addAlbum({
+                                                        title: album,
+                                                        album: [],
+                                                        artificial: true,
+                                                    })
+                                                );
+                                                setAlbum(null);
+                                            }
                                         }}
                                         underlayColor="#DDDDDD"
                                     >
@@ -213,7 +261,9 @@ const styles = StyleSheet.create({
         width: 300,
         borderRadius: 20,
         height: 35,
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: "#f2f2f2",
         marginTop: 10,
         paddingLeft: 20,
     },
@@ -233,8 +283,9 @@ const styles = StyleSheet.create({
         borderRadius: 3,
     },
     delete: {
-        // position: "absolute",
         right: 0,
+        justifyContent: "center",
+        height: "100%",
     },
     btnBox: {
         flexDirection: "row",
@@ -247,6 +298,7 @@ const styles = StyleSheet.create({
     btn: {
         justifyContent: "center",
         alignItems: "center",
+        height: "100%",
     },
     modalContainer: {
         flex: 1,

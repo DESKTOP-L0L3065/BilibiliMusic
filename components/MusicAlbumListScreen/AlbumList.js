@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableNativeFeedback, View } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    TouchableNativeFeedback,
+    TouchableWithoutFeedback,
+    View,
+} from "react-native";
 import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
@@ -31,25 +37,26 @@ const AlbumList = (props) => {
                     </Text>
                     <Text style={styles.artist}>{props.info.item.artist}</Text>
                 </View>
-                <Feather
-                    name="plus-square"
-                    style={styles.plus}
-                    size={22}
-                    color="black"
+                <TouchableWithoutFeedback
                     onPress={() => {
                         dispatch(
                             addAlbum({
-                                name: props.info.item.title.replace(
+                                title: props.info.item.title.replace(
                                     /【|】/g,
                                     ""
                                 ),
                                 aid: props.info.item.aid,
                                 bvid: props.info.item.bvid,
                                 artwork: props.info.item.artwork,
+                                artificial: false,
                             })
                         );
                     }}
-                />
+                >
+                    <View style={styles.plus}>
+                        <Feather name="plus-square" size={22} color="black" />
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
         </TouchableNativeFeedback>
     );
@@ -78,5 +85,7 @@ const styles = StyleSheet.create({
     plus: {
         right: 0,
         top: -2,
+        justifyContent: "center",
+        height: "100%",
     },
 });
