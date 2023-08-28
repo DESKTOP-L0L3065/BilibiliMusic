@@ -39,6 +39,10 @@ const SearchScreen = ({ navigation }) => {
         dispatch(setShowPlaybar(true));
     });
 
+    // const getInitState = async() => {
+
+    // }
+
     useEffect(() => {
         (async () => {
             if ((await AsyncStorage.getItem("albumList").length) >= 1) {
@@ -127,7 +131,12 @@ const SearchScreen = ({ navigation }) => {
                                       underlayColor="#bababa"
                                       onPress={() => {
                                           if (item.artificial) {
-                                              console.log("a");
+                                              navigation.navigate(
+                                                  "ArtificialAlbumListScreen",
+                                                  {
+                                                      albumInfo: item,
+                                                  }
+                                              );
                                           } else {
                                               navigation.navigate(
                                                   "MusicAlbumInfoScreen",
@@ -203,7 +212,6 @@ const SearchScreen = ({ navigation }) => {
                                         value={album}
                                         onChangeText={(value) => {
                                             setAlbum(value);
-                                            console.log(album);
                                         }}
                                     ></TextInput>
                                 </View>

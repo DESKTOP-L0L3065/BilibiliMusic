@@ -18,6 +18,7 @@ const AlbumListSlice = createSlice({
                     JSON.stringify(state.album)
                 );
             })();
+            console.log(state.album);
         },
         removeAlbum: (state, action) => {
             state.album.splice(action.payload, 1);

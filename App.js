@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchScreen from "./screens/SearchScreen";
 import MusicAlbumListScreen from "./screens/MusicAlbumListScreen";
 import MusicAlbumInfoScreen from "./screens/MusicAlbumInfoScreen";
+import ArtificialAlbumListScreen from "./screens/ArtificialAlbumListScreen";
 import Test from "./screens/Test";
 
 import Playbar from "./components/Home/Playbar";
@@ -62,6 +63,10 @@ export default function App() {
                                 <Stack.Screen
                                     name="TestScreen"
                                     component={Test}
+                                ></Stack.Screen>
+                                <Stack.Screen
+                                    name="ArtificialAlbumListScreen"
+                                    component={ArtificialAlbumListScreen}
                                 ></Stack.Screen>
                             </Stack.Navigator>
                         </View>

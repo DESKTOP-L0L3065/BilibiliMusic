@@ -11,6 +11,7 @@ import {
 import infoGetter from "../../Api/test2";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import { useState } from "react";
 
 const MusicList = (props) => {
     const albumInfo = props.albumInfo;
@@ -18,6 +19,7 @@ const MusicList = (props) => {
     return (
         <View style={{ width: "100%", marginTop: 50 }}>
             {albumInfo.map((item, index) => {
+                const [color, setColor] = useState(false);
                 return (
                     <TouchableWithoutFeedback
                         key={index}
@@ -45,12 +47,26 @@ const MusicList = (props) => {
                                 <Text numberOfLines={1}>{item.title}</Text>
                             </View>
                             <View style={styles.btnBox}>
-                                <Feather name="heart" size={20} color="black" />
-                                {/* <AntDesign
-                                    name="heart"
-                                    size={20}
-                                    color="#ff6666"
-                                /> */}
+                                {color ? (
+                                    <AntDesign
+                                        name="heart"
+                                        size={20}
+                                        color="#ff6666"
+                                        onPress={() => {
+                                            setColor(false);
+                                        }}
+                                    />
+                                ) : (
+                                    <Feather
+                                        name="heart"
+                                        size={20}
+                                        color="black"
+                                        onPress={() => {
+                                            setColor(true);
+                                        }}
+                                    />
+                                )}
+
                                 <Feather
                                     name="plus-square"
                                     size={20}
@@ -82,5 +98,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-evenly",
         alignItems: "center",
+        // borderWidth: 1,
     },
 });
