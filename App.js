@@ -16,11 +16,11 @@ import { StatusBar, Dimensions, View, Text } from "react-native";
 import { PaperProvider } from "react-native-paper";
 
 const Stack = createNativeStackNavigator();
-export default function App() {
-    let height = Dimensions.get("screen").height;
+export default function App () {
+    let height = Dimensions.get("window").height;
 
     return (
-        <View style={{ height }}>
+        <View style={{ height, marginTop: StatusBar.currentHeight }}>
             <StatusBar
                 backgroundColor="#f7f9fc"
                 barStyle="dark-content"
@@ -37,8 +37,7 @@ export default function App() {
                     >
                         <View
                             style={{
-                                height: height - 75 - StatusBar.currentHeight,
-                                marginTop: StatusBar.currentHeight,
+                                height: height - 75,
                             }}
                         >
                             <Stack.Navigator

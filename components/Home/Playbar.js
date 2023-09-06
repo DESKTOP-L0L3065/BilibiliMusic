@@ -19,7 +19,7 @@ const Playbar = () => {
         SetIsPlaying(false);
     };
 
-    async function unloadSound() {
+    async function unloadSound () {
         try {
             await soundRef.current.unloadAsync();
             console.log("音乐卸载完成");
