@@ -6,7 +6,6 @@ import {
     Keyboard,
     View,
     Text,
-    Button,
     Modal,
     TouchableHighlight,
     KeyboardAvoidingView,
@@ -39,14 +38,10 @@ const SearchScreen = ({ navigation }) => {
         dispatch(setShowPlaybar(true));
     });
 
-    // const getInitState = async() => {
-
-    // }
-
     useEffect(() => {
+
         (async () => {
-            if ((await AsyncStorage.getItem("albumList").length) >= 1) {
-                console.log(AsyncStorage.getItem("albumList").length);
+            if (JSON.parse(await AsyncStorage.getItem("albumList")).length >= 1) {
                 dispatch(
                     setState(
                         JSON.parse(await AsyncStorage.getItem("albumList"))
@@ -125,74 +120,74 @@ const SearchScreen = ({ navigation }) => {
                         (albumList.length = 0
                             ? null
                             : albumList.map((item, index) => (
-                                  <TouchableHighlight
-                                      key={index}
-                                      activeOpacity={1}
-                                      underlayColor="#bababa"
-                                      onPress={() => {
-                                          if (item.artificial) {
-                                              navigation.navigate(
-                                                  "ArtificialAlbumListScreen",
-                                                  {
-                                                      albumInfo: item,
-                                                  }
-                                              );
-                                          } else {
-                                              navigation.navigate(
-                                                  "MusicAlbumInfoScreen",
-                                                  {
-                                                      aid: item.aid,
-                                                      bvid: item.bvid,
-                                                      artwork: item.artwork,
-                                                  }
-                                              );
-                                          }
-                                      }}
-                                  >
-                                      <View style={styles.albumItem}>
-                                          {item.artwork ? (
-                                              <Image
-                                                  source={{
-                                                      uri: item.artwork,
-                                                  }}
-                                                  style={styles.image}
-                                              ></Image>
-                                          ) : (
-                                              <Image
-                                                  source={require("../assets/FFFFFFFF.png")}
-                                                  style={styles.image}
-                                              ></Image>
-                                          )}
-                                          <Text
-                                              numberOfLines={1}
-                                              ellipsizeMode="tail"
-                                              style={{
-                                                  flex: 1,
-                                                  marginRight: 40,
-                                              }}
-                                          >
-                                              {item.title}
-                                          </Text>
-                                          {index == 0 ? null : (
-                                              <TouchableWithoutFeedback
-                                                  onPress={() => {
-                                                      dispatch(
-                                                          removeAlbum(index)
-                                                      );
-                                                  }}
-                                              >
-                                                  <View style={styles.delete}>
-                                                      <AntDesign
-                                                          name="delete"
-                                                          size={24}
-                                                          color="black"
-                                                      />
-                                                  </View>
-                                              </TouchableWithoutFeedback>
-                                          )}
-                                      </View>
-                                  </TouchableHighlight>
-                              )))
+                                <TouchableHighlight
+                                    key={index}
+                                    activeOpacity={1}
+                                    underlayColor="#bababa"
+                                    onPress={() => {
+                                        if (item.artificial) {
+                                            navigation.navigate(
+                                                "ArtificialAlbumListScreen",
+                                                {
+                                                    albumInfo: item,
+                                                }
+                                            );
+                                        } else {
+                                            navigation.navigate(
+                                                "MusicAlbumInfoScreen",
+                                                {
+                                                    aid: item.aid,
+                                                    bvid: item.bvid,
+                                                    artwork: item.artwork,
+                                                }
+                                            );
+                                        }
+                                    }}
+                                >
+                                    <View style={styles.albumItem}>
+                                        {item.artwork ? (
+                                            <Image
+                                                source={{
+                                                    uri: item.artwork,
+                                                }}
+                                                style={styles.image}
+                                            ></Image>
+                                        ) : (
+                                            <Image
+                                                source={require("../assets/FFFFFFFF.png")}
+                                                style={styles.image}
+                                            ></Image>
+                                        )}
+                                        <Text
+                                            numberOfLines={1}
+                                            ellipsizeMode="tail"
+                                            style={{
+                                                flex: 1,
+                                                marginRight: 40,
+                                            }}
+                                        >
+                                            {item.title}
+                                        </Text>
+                                        {index == 0 ? null : (
+                                            <TouchableWithoutFeedback
+                                                onPress={() => {
+                                                    dispatch(
+                                                        removeAlbum(index)
+                                                    );
+                                                }}
+                                            >
+                                                <View style={styles.delete}>
+                                                    <AntDesign
+                                                        name="delete"
+                                                        size={24}
+                                                        color="black"
+                                                    />
+                                                </View>
+                                            </TouchableWithoutFeedback>
+                                        )}
+                                    </View>
+                                </TouchableHighlight>
+                            )))
                     }
                 </View>
                 <Modal
